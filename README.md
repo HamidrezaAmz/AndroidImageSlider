@@ -13,6 +13,7 @@ The old repository has lots of **Dependencies** issues, **AndroidX** support, **
 
 ### Step 1
 
+
 #### Gradle
 
 ```groovy
@@ -20,6 +21,7 @@ dependencies {
     implementation 'com.github.HamidrezaAmz:AndroidImageSlider:v1.0.1'
 }
 ```
+
 
 ### Step 2
 
@@ -37,4 +39,28 @@ Add permissions (if necessary) to your `AndroidManifest.xml`
 
 If you want to load images from drawable, then no additional permissions are necessary.
 
+
 ### Step 3
+
+Add the Slider to your layout:
+ 
+```java
+<com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+/>
+```        
+ 
+There are some default indicators. If you want to use a provided indicator:
+ 
+```java
+<com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/custom_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        />
+```
+
+[Code example](https://github.com/daimajia/AndroidImageSlider/blob/master/demo%2Fsrc%2Fmain%2Fjava%2Fcom%2Fdaimajia%2Fslider%2Fdemo%2FMainActivity.java)
