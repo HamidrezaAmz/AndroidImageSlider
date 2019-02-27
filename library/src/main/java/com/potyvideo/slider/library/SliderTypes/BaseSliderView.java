@@ -35,7 +35,7 @@ public abstract class BaseSliderView {
      */
     private int mEmptyPlaceHolderRes;
 
-    private String mUrl;
+    private String mUrl, mBlurUrl;
     private File mFile;
     private int mRes;
 
@@ -48,6 +48,7 @@ public abstract class BaseSliderView {
     private String mDescription;
 
     private Picasso mPicasso;
+    private Picasso mPicassoBlur;
 
     /**
      * Scale type of the image.
@@ -118,6 +119,16 @@ public abstract class BaseSliderView {
                     "you only have permission to call it once");
         }
         mUrl = url;
+        return this;
+    }
+
+    public BaseSliderView image(String url, String mBlurUrl) {
+        if (mFile != null || mRes != 0) {
+            throw new IllegalStateException("Call multi image function," +
+                    "you only have permission to call it once");
+        }
+        mUrl = url;
+        this.mBlurUrl = mBlurUrl;
         return this;
     }
 
@@ -253,6 +264,108 @@ public abstract class BaseSliderView {
         }
 
         rq.into(targetImageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                if (v.findViewById(R.id.loading_bar) != null) {
+                    v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                if (mLoadListener != null) {
+                    mLoadListener.onEnd(false, me);
+                }
+                if (v.findViewById(R.id.loading_bar) != null) {
+                    v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
+                }
+            }
+
+        });
+    }
+
+    protected void bindEventAndShowWithBlur(final View v, ImageView targetImageView, ImageView targetImageViewBlur) {
+        final BaseSliderView me = this;
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnSliderClickListener != null) {
+                    mOnSliderClickListener.onSliderClick(me);
+                }
+            }
+        });
+
+        if (targetImageView == null)
+            return;
+
+        if (mLoadListener != null) {
+            mLoadListener.onStart(me);
+        }
+
+        Picasso p = (mPicasso != null) ? mPicasso : Picasso.get();
+        Picasso pBlur = (mPicassoBlur != null) ? mPicassoBlur : Picasso.get();
+
+        RequestCreator rq = null;
+        RequestCreator rqBlur = null;
+
+        if (mUrl != null && mBlurUrl != null) {
+            rq = p.load(mUrl);
+            rqBlur = pBlur.load(mBlurUrl);
+        } else if (mFile != null) {
+            rq = p.load(mFile);
+        } else if (mRes != 0) {
+            rq = p.load(mRes);
+        } else {
+            return;
+        }
+
+        if (rq == null || rqBlur == null) {
+            return;
+        }
+
+        if (getEmpty() != 0) {
+            rq.placeholder(getEmpty());
+        }
+
+        if (getError() != 0) {
+            rq.error(getError());
+            rqBlur.error(getError());
+        }
+
+        switch (mScaleType) {
+            case Fit:
+                rq.fit();
+                break;
+            case CenterCrop:
+                rq.fit().centerCrop();
+                break;
+            case CenterInside:
+                rq.fit().centerInside();
+                break;
+        }
+
+        rq.into(targetImageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                if (v.findViewById(R.id.loading_bar) != null) {
+                    v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                if (mLoadListener != null) {
+                    mLoadListener.onEnd(false, me);
+                }
+                if (v.findViewById(R.id.loading_bar) != null) {
+                    v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
+                }
+            }
+
+        });
+
+        rqBlur.into(targetImageView, new Callback() {
             @Override
             public void onSuccess() {
                 if (v.findViewById(R.id.loading_bar) != null) {

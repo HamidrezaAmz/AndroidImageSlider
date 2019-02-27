@@ -11,19 +11,21 @@ import com.potyvideo.slider.library.R;
 /**
  * This is a slider with a description TextView.
  */
-public class TextSliderView extends BaseSliderView {
+public class TextSliderViewBlurBase extends BaseSliderView {
 
-    public TextSliderView(Context context) {
+    public TextSliderViewBlurBase(Context context) {
         super(context);
     }
 
     @Override
     public View getView() {
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.render_type_text, null);
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.render_type_text_blur, null);
         ImageView target = (ImageView) v.findViewById(R.id.slider_image);
+        ImageView target_blur = (ImageView) v.findViewById(R.id.slider_image_blur);
         TextView description = (TextView) v.findViewById(R.id.description);
         description.setText(getDescription());
-        bindEventAndShow(v, target);
+        bindEventAndShowWithBlur(v, target, target_blur);
         return v;
+
     }
 }
