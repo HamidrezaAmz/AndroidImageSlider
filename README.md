@@ -1,4 +1,4 @@
-[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=17)
+[![API](https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=17)
 [![](https://jitpack.io/v/HamidrezaAmz/AndroidImageSlider.svg)](https://jitpack.io/#HamidrezaAmz/AndroidImageSlider)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
