@@ -62,3 +62,13 @@ There are some default indicators. If you want to use a provided indicator:
 ```
 
 [Code example](https://github.com/HamidrezaAmz/AndroidImageSlider/blob/master/demo/src/main/java/com/potyvideo/slider/demo/MainActivity.java)
+
+ 
+## Advanced usage
+
+Please visit [Wiki](https://github.com/daimajia/AndroidImageSlider/wiki)
+ 
+## Thanks
+
+- [Daimajia](https://github.com/daimajia)
+- [Picasso](https://github.com/square/picasso)
