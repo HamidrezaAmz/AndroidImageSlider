@@ -53,7 +53,7 @@ Add the Slider to your layout:
  
 There are some default indicators. If you want to use a provided indicator:
  
-```java
+```XML
 <com.daimajia.slider.library.Indicators.PagerIndicator
         android:id="@+id/custom_indicator"
         android:layout_width="wrap_content"
@@ -61,4 +61,4 @@ There are some default indicators. If you want to use a provided indicator:
         android:gravity="center"/>
 ```
 
-[Code example](https://github.com/daimajia/AndroidImageSlider/blob/master/demo%2Fsrc%2Fmain%2Fjava%2Fcom%2Fdaimajia%2Fslider%2Fdemo%2FMainActivity.java)
+[Code example](https://github.com/HamidrezaAmz/AndroidImageSlider/blob/master/demo/src/main/java/com/potyvideo/slider/demo/MainActivity.java)
