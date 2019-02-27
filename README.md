@@ -44,7 +44,7 @@ If you want to load images from drawable, then no additional permissions are nec
 
 Add the Slider to your layout:
  
-```java
+```XML
 <com.daimajia.slider.library.SliderLayout
         android:id="@+id/slider"
         android:layout_width="match_parent"
