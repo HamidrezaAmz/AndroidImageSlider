@@ -44,6 +44,7 @@ public abstract class BaseSliderView {
     private boolean mErrorDisappear;
 
     private ImageLoadListener mLoadListener;
+    private ImageLoadListener mLoadListenerBlur;
 
     private String mDescription;
 
@@ -56,7 +57,7 @@ public abstract class BaseSliderView {
     private ScaleType mScaleType = ScaleType.Fit;
 
     public enum ScaleType {
-        CenterCrop, CenterInside, Fit, FitCenterCrop
+        CenterCrop, CenterInside, Fit, FitCenterCrop, NoChange
     }
 
     protected BaseSliderView(Context context) {
@@ -296,22 +297,25 @@ public abstract class BaseSliderView {
             }
         });
 
-        if (targetImageView == null)
+        if (targetImageView == null || targetImageViewBlur == null)
             return;
 
         if (mLoadListener != null) {
             mLoadListener.onStart(me);
         }
+        if (mLoadListenerBlur != null) {
+            mLoadListenerBlur.onStart(me);
+        }
 
         Picasso p = (mPicasso != null) ? mPicasso : Picasso.get();
-        Picasso pBlur = (mPicassoBlur != null) ? mPicassoBlur : Picasso.get();
+        // Picasso pBlur = (mPicassoBlur != null) ? mPicassoBlur : Picasso.get();
 
         RequestCreator rq = null;
         RequestCreator rqBlur = null;
 
         if (mUrl != null && mBlurUrl != null) {
             rq = p.load(mUrl);
-            rqBlur = pBlur.load(mBlurUrl);
+            rqBlur = p.load(mBlurUrl);
         } else if (mFile != null) {
             rq = p.load(mFile);
         } else if (mRes != 0) {
@@ -343,6 +347,8 @@ public abstract class BaseSliderView {
             case CenterInside:
                 rq.fit().centerInside();
                 break;
+            case NoChange:
+                break;
         }
 
         rq.into(targetImageView, new Callback() {
@@ -365,7 +371,7 @@ public abstract class BaseSliderView {
 
         });
 
-        rqBlur.into(targetImageView, new Callback() {
+        rqBlur.into(targetImageViewBlur, new Callback() {
             @Override
             public void onSuccess() {
                 if (v.findViewById(R.id.loading_bar) != null) {
@@ -375,8 +381,8 @@ public abstract class BaseSliderView {
 
             @Override
             public void onError(Exception e) {
-                if (mLoadListener != null) {
-                    mLoadListener.onEnd(false, me);
+                if (mLoadListenerBlur != null) {
+                    mLoadListenerBlur.onEnd(false, me);
                 }
                 if (v.findViewById(R.id.loading_bar) != null) {
                     v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
@@ -411,6 +417,10 @@ public abstract class BaseSliderView {
      */
     public void setOnImageLoadListener(ImageLoadListener l) {
         mLoadListener = l;
+    }
+
+    public void setOnBlurImageLoadListener(ImageLoadListener l) {
+        mLoadListenerBlur = l;
     }
 
     public interface OnSliderClickListener {
