@@ -61,8 +61,8 @@ There are some default indicators. If you want to use a provided indicator:
         android:gravity="center"/>
 ```
 
-[Code example](https://github.com/HamidrezaAmz/AndroidImageSlider/blob/master/demo/src/main/java/com/potyvideo/slider/demo/MainActivity.java)
-
+Chage out [Code example](https://github.com/HamidrezaAmz/AndroidImageSlider/blob/master/demo/src/main/java/com/potyvideo/slider/demo/MainActivity.java)
+ for a compleat exmple.
  
 ## Advanced usage
 
