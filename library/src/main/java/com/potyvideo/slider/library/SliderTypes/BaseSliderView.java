@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.potyvideo.slider.library.R;
+import com.potyvideo.slider.library.Transformations.RoundedCornersTransformation;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Transformation;
 
 import java.io.File;
 
@@ -285,6 +287,88 @@ public abstract class BaseSliderView {
         });
     }
 
+    protected void bindEventAndShowCurve(final View v, ImageView targetImageView) {
+        final BaseSliderView me = this;
+
+        final int radius = 25;
+        final int margin = 1;
+        final Transformation transformation = new RoundedCornersTransformation(radius, margin);
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnSliderClickListener != null) {
+                    mOnSliderClickListener.onSliderClick(me);
+                }
+            }
+        });
+
+        if (targetImageView == null)
+            return;
+
+        if (mLoadListener != null) {
+            mLoadListener.onStart(me);
+        }
+
+        Picasso p = (mPicasso != null) ? mPicasso : Picasso.get();
+        RequestCreator rq = null;
+        if (mUrl != null) {
+            rq = p.load(mUrl);
+        } else if (mFile != null) {
+            rq = p.load(mFile);
+        } else if (mRes != 0) {
+            rq = p.load(mRes);
+        } else {
+            return;
+        }
+
+        if (rq == null) {
+            return;
+        }
+
+        if (getEmpty() != 0) {
+            rq.placeholder(getEmpty());
+        }
+
+        if (getError() != 0) {
+            rq.error(getError());
+        }
+
+        rq.transform(transformation);
+
+        switch (mScaleType) {
+            case Fit:
+                rq.fit();
+                break;
+            case CenterCrop:
+                rq.fit().centerCrop();
+                break;
+            case CenterInside:
+                rq.fit().centerInside();
+                break;
+        }
+
+        rq.into(targetImageView, new Callback() {
+            @Override
+            public void onSuccess() {
+                if (v.findViewById(R.id.loading_bar) != null) {
+                    v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                if (mLoadListener != null) {
+                    mLoadListener.onEnd(false, me);
+                }
+                if (v.findViewById(R.id.loading_bar) != null) {
+                    v.findViewById(R.id.loading_bar).setVisibility(View.INVISIBLE);
+                }
+            }
+
+        });
+    }
+
     protected void bindEventAndShowWithBlur(final View v, ImageView targetImageView, ImageView targetImageViewBlur) {
         final BaseSliderView me = this;
 
@@ -391,7 +475,6 @@ public abstract class BaseSliderView {
 
         });
     }
-
 
     public BaseSliderView setScaleType(ScaleType type) {
         mScaleType = type;

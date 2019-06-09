@@ -13,16 +13,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.potyvideo.slider.library.Animations.DescriptionAnimation;
 import com.potyvideo.slider.library.Indicators.PagerIndicator;
 import com.potyvideo.slider.library.SliderLayout;
 import com.potyvideo.slider.library.SliderTypes.BaseSliderView;
-import com.potyvideo.slider.library.SliderTypes.TextSliderView;
+import com.potyvideo.slider.library.SliderTypes.TextSliderViewCurve;
 import com.potyvideo.slider.library.Tricks.ViewPagerEx;
 
 import java.util.HashMap;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         file_maps.put("Game of Thrones", R.drawable.game_of_thrones);
 
         for (String name : file_maps.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(this);
+            TextSliderViewCurve textSliderView = new TextSliderViewCurve(this);
             // initialize a SliderLayout
             textSliderView
                     .description(name)
                     .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.NoChange)
+                    .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener(this);
 
             //add your extra information
