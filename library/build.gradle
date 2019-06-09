@@ -3,14 +3,15 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.hamidrezaamz'
 
 android {
+
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.5"
     }
     buildTypes {
         release {
@@ -25,6 +26,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0-alpha01'
 }
