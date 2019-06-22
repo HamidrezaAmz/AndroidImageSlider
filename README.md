@@ -21,7 +21,7 @@ The old repository has lots of **Dependencies** issues, **AndroidX** support, **
 
 ```groovy
 dependencies {
-    implementation 'com.github.HamidrezaAmz:AndroidImageSlider:v1.0.5'
+    implementation 'com.github.HamidrezaAmz:AndroidImageSlider:v1.0.8'
 }
 ```
 
