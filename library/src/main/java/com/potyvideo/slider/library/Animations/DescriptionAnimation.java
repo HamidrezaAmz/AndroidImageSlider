@@ -11,7 +11,17 @@ import com.potyvideo.slider.library.Tricks.ViewPagerEx;
  * A demo class to show how to use {@link BaseAnimationInterface}
  * to make  your custom animation in {@link ViewPagerEx.PageTransformer} action.
  */
+
 public class DescriptionAnimation implements BaseAnimationInterface {
+
+    private Boolean showDescription = true;
+
+    public DescriptionAnimation() {
+    }
+
+    public DescriptionAnimation(Boolean showDescription) {
+        this.showDescription = showDescription;
+    }
 
     @Override
     public void onPrepareCurrentItemLeaveScreen(View current) {
@@ -34,7 +44,6 @@ public class DescriptionAnimation implements BaseAnimationInterface {
         }
     }
 
-
     @Override
     public void onCurrentItemDisappear(View view) {
 
@@ -52,12 +61,16 @@ public class DescriptionAnimation implements BaseAnimationInterface {
         View descriptionLayout = view.findViewById(R.id.description_layout);
         if (descriptionLayout != null) {
             float layoutY = descriptionLayout.getY();
-            view.findViewById(R.id.description_layout).setVisibility(View.VISIBLE);
-            ValueAnimator animator = ObjectAnimator.ofFloat(
-                    descriptionLayout, "y", layoutY + descriptionLayout.getHeight(),
-                    layoutY).setDuration(500);
+
+            if (showDescription)
+                view.findViewById(R.id.description_layout).setVisibility(View.VISIBLE);
+            else
+                view.findViewById(R.id.description_layout).setVisibility(View.GONE);
+
+            ValueAnimator animator = ObjectAnimator
+                    .ofFloat(descriptionLayout, "y", layoutY + descriptionLayout.getHeight(), layoutY)
+                    .setDuration(500);
             animator.start();
         }
-
     }
 }

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         file_maps.put("Game of Thrones", R.drawable.game_of_thrones);
 
         for (String name : file_maps.keySet()) {
-            TextSliderViewCurve textSliderView = new TextSliderViewCurve(this);
+            TextSliderViewCurve textSliderView = new TextSliderViewCurve(this, false);
             // initialize a SliderLayout
             textSliderView
                     .description(name)
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         }
         mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation(false));
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
         ListView l = (ListView) findViewById(R.id.transformers);
