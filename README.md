@@ -13,8 +13,18 @@ The old repository has lots of **Dependencies** issues, **AndroidX** support, **
 ![](http://ww3.sinaimg.cn/mw690/610dc034jw1egzor66ojdg20950fknpe.gif)
 
 ## Usage
+Step 1. Add the JitPack repository to your build file,
+Add it in your root build.gradle at the end of repositories:
 
-### Step 1
+```gradle
+allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
+```
+
+Step 2. Add the dependency
 
 
 #### Gradle
